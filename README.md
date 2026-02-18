@@ -1,4 +1,4 @@
-# 📈 Eden Insights: Automated Stock Forecasting Pipeline
+# Automated Stock Forecasting Pipeline
 
 A fully automated, end-to-end data pipeline that ingests equity data, generates 7-day price forecasts using the Prophet algorithm, and visualizes insights via a dynamic Power BI dashboard.
 
