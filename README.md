@@ -1,6 +1,7 @@
 # Automated Stock Forecasting Pipeline
 
 A fully automated, end-to-end data pipeline that ingests equity data, generates 7-day price forecasts using the Prophet algorithm, and visualizes insights via a dynamic Power BI dashboard.
+It can be accessed here: https://app.powerbi.com/links/DS54-3Zmjn?ctid=328d6c0d-0f2f-4b76-9310-9762ba1c3e2d&pbi_source=linkShare&bookmarkGuid=0bbbee22-626e-4458-a4f9-ffe07b6ea73b
 
 
 
