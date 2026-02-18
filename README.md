@@ -1,41 +1,34 @@
-Automated Stock Forecasting Pipeline
-A fully automated, end-to-end data pipeline that ingests equity data, generates 7-day price forecasts using Facebook Prophet, and visualizes insights via a dynamic Power BI dashboard.
+# 📈 Eden Insights: Automated Stock Forecasting Pipeline
 
-🏗️ The Architecture
-This project automates the transition from raw market data to actionable foresight:
+A fully automated, end-to-end data pipeline that ingests equity data, generates 7-day price forecasts using the Prophet algorithm, and visualizes insights via a dynamic Power BI dashboard.
 
-Data Ingestion: A Python-based automation pulls daily historical closing prices for specific tickers via the Yahoo Finance API.
 
-Predictive Modeling: The pipeline utilizes the Facebook Prophet algorithm to process time-series data and generate a 7-day forecast (yhat).
 
-Cloud Storage: The processed dataset, containing both actual and predicted values, is automatically uploaded to Azure Blob Storage.
+## 🏗️ Architecture & Workflow
+This project automates the transition from raw market data to actionable foresight for **Eden Enterprises**:
 
-Live Visualization: Power BI Service is configured with a scheduled refresh to pull the latest data from Azure, ensuring the dashboard reflects the most recent 7-day outlook.
+1.  **Data Ingestion:** A Python script automates the extraction of daily historical closing prices via the Yahoo Finance API.
+2.  **Predictive Modeling:** The pipeline utilizes **Facebook Prophet** to process time-series data and generate a 7-day forecasting horizon (`yhat`).
+3.  **Cloud Storage:** Processed datasets are automatically exported as `.csv` files and uploaded to **Azure Blob Storage**.
+4.  **Live Visualization:** **Power BI Service** connects to the Azure cloud source with a scheduled refresh, ensuring the dashboard reflects the most recent predictions without manual intervention.
 
-🛠️ Technical Implementation
-The Python Forecasting Engine
-The core script handles the model training and forecasting horizon.
+---
 
-Algorithm: Facebook Prophet for additive time-series forecasting.
+## 🛠️ Technical Stack
+* **Modeling:** Python (Prophet, Pandas, NumPy).
+* **Cloud Infrastructure:** Azure Machine Learning, Azure Blob Storage.
+* **Analytics & BI:** Power BI Desktop/Service, DAX (Data Analysis Expressions).
 
-Automation: Configured to run daily, ensuring the forecast window moves forward with the market.
+---
 
-Power BI & DAX Engineering
-To handle the challenges of stock market data (such as weekends and holidays), the dashboard uses specialized DAX measures:
+## 📊 Data Engineering & DAX
+To maintain data integrity and handle market closures, the dashboard implements custom DAX measures:
 
-Current Price Baseline: Uses LASTNONBLANKVALUE to ensure the dashboard always shows the most recent "Actual" price, even when the timeline moves into future forecast dates.
-
-Dynamic Timeframes: Implements relative date filtering to allow users to toggle between 1D, 7D, 1M, and 1Y views.
-
-Accuracy Tracking: Includes a MAPE (Mean Absolute Percentage Error) calculation to quantify the model's reliability over time.
-
-🚀 Impact & Results
-Zero-Touch Automation: Eliminated manual data entry and model retraining by creating a scheduled cloud-native pipeline.
-
-Executive Decision Support: Provides a 7-day price target and current market baseline in a single, mobile-accessible interface.
-
-Scalability: The architecture is built to support multiple tickers by simply updating the ingestion parameters.
-
-👤 Author
-Chibuike ‘Chib’ Odibeli
-Founder, Eden Enterprises | Master’s in Data Science Candidate, UMass Dartmouth.
+### Current Price Baseline
+Ensures the "Today's Price" card always displays the last recorded actual value (`y`), ignoring empty forecast dates or weekend gaps.
+```dax
+Current Price = 
+CALCULATE(
+    LASTNONBLANKVALUE('stock-data'[ds], SUM('stock-data'[y])),
+    ALL('stock-data')
+)
